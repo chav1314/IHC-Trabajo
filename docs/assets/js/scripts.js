@@ -14,26 +14,29 @@ async function initMap() {
 
 initMap();
 
-// Selecciona todos los enlaces del menú de navegación
 const navLinks = document.querySelectorAll('.nav-links li a');
-
-// Agrega los eventos de hover a cada enlace
 navLinks.forEach(link => {
-  // Efecto al pasar el cursor
   link.addEventListener('mouseenter', () => {
-    link.style.fontSize = '18px'; // Aumenta ligeramente el tamaño del texto
-    link.style.fontWeight = 'bold'; // Cambia a negrita
-    link.style.color = '#000'; // Cambia el color a negro (opcional)
-    link.style.transition = 'font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease'; // Transición suave
+    link.style.fontSize = '18px';
+    link.style.fontWeight = 'bold';
+    link.style.color = '#000';
+    link.style.transition = 'font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease';
   });
-
-  // Efecto al quitar el cursor
   link.addEventListener('mouseleave', () => {
-    link.style.fontSize = '16px'; // Restaura el tamaño original del texto
-    link.style.fontWeight = '600'; // Restaura el grosor original
-    link.style.color = '#333'; // Restaura el color original
+    link.style.fontSize = '16px'; 
+    link.style.fontWeight = '600';
+    link.style.color = '#333';
   });
 });
+const featureItems = document.querySelectorAll('.feature');
 
+featureItems.forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    item.style.transform = 'scale(1.2)'; // Aumenta el tamaño un 10%
+    item.style.transition = 'transform 0.3s ease'; // Transición suave
+  });
 
-
+  item.addEventListener('mouseleave', () => {
+    item.style.transform = 'scale(1)'; // Restaura el tamaño original
+  });
+});

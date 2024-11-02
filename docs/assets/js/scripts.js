@@ -36,19 +36,4 @@ navLinks.forEach(link => {
 });
 
 
-// Selecciona todos los elementos que contienen las imágenes y sus textos
-const featureItems = document.querySelectorAll('.feature');
 
-// Agrega el evento para el efecto de hover
-featureItems.forEach(item => {
-  // Aplica el efecto al entrar el cursor
-  item.addEventListener('mouseenter', () => {
-    item.style.transform = 'scale(1.2)'; // Aumenta el tamaño un 10%
-    item.style.transition = 'transform 0.3s ease'; // Transición suave
-  });
-
-  // Quita el efecto al salir el cursor
-  item.addEventListener('mouseleave', () => {
-    item.style.transform = 'scale(1)'; // Restaura el tamaño original
-  });
-});

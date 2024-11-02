@@ -40,22 +40,14 @@ body {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .nav-links li a {
     color: #333;
     text-decoration: none;
     font-weight: 600;
-    font-size: 16px; /* Tamaño inicial de la fuente */
-    line-height: 1.5; /* Define un espacio constante para evitar movimiento */
-    transition: font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease;
-}
-
-.nav-links li a:hover {
-    font-size: 17px; /* Aumenta solo ligeramente el tamaño para evitar movimiento */
-    font-weight: bold; /* Cambia a negrita */
-    color: #000; /* Opcional: cambia el color a negro */
+    font-size: 16px;
 }
 
 .hero {

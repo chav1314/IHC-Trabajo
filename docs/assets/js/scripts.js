@@ -14,6 +14,24 @@ async function initMap() {
 
 initMap();
 
+const navLinks = document.querySelectorAll('.nav-links li a');
+
+navLinks.forEach(link => {
+  link.addEventListener('mouseenter', () => {
+    link.style.fontSize = '18px';
+    link.style.fontWeight = 'bold';
+    link.style.color = '#000';
+    link.style.transition = 'font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease';
+  });
+
+  link.addEventListener('mouseleave', () => {
+    link.style.fontSize = '16px'; 
+    link.style.fontWeight = '600';
+    link.style.color = '#333';
+  });
+});
+
+
 const featureItems = document.querySelectorAll('.feature');
 
 featureItems.forEach(item => {

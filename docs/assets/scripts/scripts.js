@@ -1,39 +1,32 @@
-
-// Selecciona todos los enlaces del menú de navegación
 const navLinks = document.querySelectorAll('.nav-links li a');
 
-// Agrega los eventos de hover a cada enlace
 navLinks.forEach(link => {
-  // Efecto al pasar el cursor
+
   link.addEventListener('mouseenter', () => {
-    link.style.fontSize = '18px'; // Aumenta ligeramente el tamaño del texto
-    link.style.fontWeight = 'bold'; // Cambia a negrita
-    link.style.color = '#000'; // Cambia el color a negro (opcional)
-    link.style.transition = 'font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease'; // Transición suave
+    link.style.fontSize = '18px';
+    link.style.fontWeight = 'bold';
+    link.style.color = '#000';
+    link.style.transition = 'font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease';
   });
 
-  // Efecto al quitar el cursor
   link.addEventListener('mouseleave', () => {
-    link.style.fontSize = '16px'; // Restaura el tamaño original del texto
-    link.style.fontWeight = '600'; // Restaura el grosor original
-    link.style.color = '#333'; // Restaura el color original
+    link.style.fontSize = '16px';
+    link.style.fontWeight = '600';
+    link.style.color = '#333';
   });
 });
 
-// Selecciona todos los elementos que contienen las imágenes y sus textos
 const featureItems = document.querySelectorAll('.feature');
 
-// Agrega el evento para el efecto de hover
 featureItems.forEach(item => {
-  // Aplica el efecto al entrar el cursor
+
   item.addEventListener('mouseenter', () => {
-    item.style.transform = 'scale(1.2)'; // Aumenta el tamaño un 10%
-    item.style.transition = 'transform 0.3s ease'; // Transición suave
+    item.style.transform = 'scale(1.2)'; 
+    item.style.transition = 'transform 0.3s ease';
   });
 
-  // Quita el efecto al salir el cursor
   item.addEventListener('mouseleave', () => {
-    item.style.transform = 'scale(1)'; // Restaura el tamaño original
+    item.style.transform = 'scale(1)';
   });
 });
 
@@ -43,14 +36,14 @@ let directionsService, directionsRenderer;
 let trafficLayer; 
 
 function initMap() {
-  // Solo inicializar el mapa y capa de tráfico si el elemento "map" existe en la página actual
+
   const mapElement = document.getElementById("map");
   if (mapElement) {
       map = new google.maps.Map(mapElement, {
           center: { lat: -12.088577, lng: -77.005112 },
           zoom: 13,
       });
-      // Activar capa de tráfico
+
       const trafficLayer = new google.maps.TrafficLayer();
       trafficLayer.setMap(map);
   }
@@ -61,7 +54,7 @@ initMap();
 function initRouteMap() {
     const routeMapElement = document.getElementById("routeMap");
     if (routeMapElement) {
-        // Inicializar el mapa específico para rutas en mapa_buses.html
+
         routeMap = new google.maps.Map(routeMapElement, {
             center: { lat: -12.088577, lng: -77.005112 },
             zoom: 13,
@@ -72,7 +65,6 @@ function initRouteMap() {
         directionsRenderer = new google.maps.DirectionsRenderer();
         directionsRenderer.setMap(routeMap);
 
-        // Inicializar autocompletado en los campos de entrada
         const startInput = document.getElementById("start");
         const destinationInput = document.getElementById("destination");
 
@@ -83,7 +75,6 @@ function initRouteMap() {
             autocompleteDestination.setComponentRestrictions({ country: "pe" });
         }
 
-        // Inicializar la capa de tráfico pero no mostrarla inicialmente
         trafficLayer = new google.maps.TrafficLayer();
     }
 }

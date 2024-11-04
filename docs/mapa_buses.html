@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Buses - Peruvian Transport System</title>
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <link rel="stylesheet" href="assets/styles/buscador.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="logo">
+                        <img src="assets/images/Logo.png" alt="Peruvian Transport System" class="logo-img">
+                    </div>
+                    <h1>Mapa de Buses</h1>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="mapa_buses.html">Mapa de Buses</a></li>
+                        <li><a href="#">Tráfico en Tiempo Real</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <section class="search-section">
+                <div class="search-box">
+                    <h3>Buscar Rutas de Buses</h3>
+                    <div class="search-container">
+                        <input type="text" id="start" placeholder="Punto de partida">
+                        <input type="text" id="destination" placeholder="Destino">
+                        <button onclick="calculateRoute()">Buscar Ruta</button>
+                    </div>
+                </div>                
+            </section>
+
+            <section id="map-section" class="map-section">
+                <h2>Mapa de Rutas</h2>
+                <div class="filter-container">
+                    <button onclick="toggleFilterMenu()" class="filter-button">Filtros</button>
+                    <div id="filterMenu" class="filter-menu">
+                        <label>
+                            <input type="checkbox" id="trafficToggle" onchange="toggleTrafficLayer()"> Mostrar Tráfico
+                        </label>
+                    </div>
+                </div>
+                <div id="routeMap" style="height: 500px; width: 100%;"></div>
+
+
+                <div id="routesContainer" class="routes-container"></div>                
+
+            </section>
+
+            <section>
+                <div id="routeMap" style="height: 500px; width: 100%;"></div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div class="container">
+                <p>&copy; 2024 Peruvian Transport System. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Google Maps API con tu clave de API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIfxOTkD_7nrMyNLjdPyDniyV4anbSGTM&callback=initMap&libraries=places" async defer></script>
+    <script src="assets/scripts/scripts.js"></script>
+</body>
+</html>

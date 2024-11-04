@@ -95,13 +95,13 @@ button:hover {
 }
 
 .search-box {
-    background-color: #f5faff; /* Fondo suave y agradable */
-    border-radius: 30px; /* Bordes redondeados */
-    padding: 30px; /* Espacio interno */
-    margin-bottom: 20px; /* Espacio con el resto de elementos */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    max-width: 1000px; /* Ancho máximo para mantenerlo compacto */
-    margin: 0 auto; /* Centrar el contenedor */
+    background-color: #f5faff;
+    border-radius: 30px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 .search-box h3 {

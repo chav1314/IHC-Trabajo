@@ -1,107 +1,64 @@
+let mainMap, routeMap, geocoder, directionsService, directionsRenderer, trafficLayer;
+let autocompleteStart, autocompleteDestination;
 
-// Selecciona todos los enlaces del menú de navegación
-const navLinks = document.querySelectorAll('.nav-links li a');
+function initializeMap(elementId, options = {}) {
+    const mapElement = document.getElementById(elementId);
+    if (!mapElement) return null;
 
-// Agrega los eventos de hover a cada enlace
-navLinks.forEach(link => {
-  // Efecto al pasar el cursor
-  link.addEventListener('mouseenter', () => {
-    link.style.fontSize = '18px'; // Aumenta ligeramente el tamaño del texto
-    link.style.fontWeight = 'bold'; // Cambia a negrita
-    link.style.color = '#000'; // Cambia el color a negro (opcional)
-    link.style.transition = 'font-size 0.3s ease, font-weight 0.3s ease, color 0.3s ease'; // Transición suave
-  });
+    const map = new google.maps.Map(mapElement, {
+        center: { lat: -12.088577, lng: -77.005112 },
+        zoom: 13,
+        ...options.mapOptions,
+    });
 
-  // Efecto al quitar el cursor
-  link.addEventListener('mouseleave', () => {
-    link.style.fontSize = '16px'; // Restaura el tamaño original del texto
-    link.style.fontWeight = '600'; // Restaura el grosor original
-    link.style.color = '#333'; // Restaura el color original
-  });
-});
+    if (options.trafficLayer) {
+        const trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+    }
 
-// Selecciona todos los elementos que contienen las imágenes y sus textos
-const featureItems = document.querySelectorAll('.feature');
-
-// Agrega el evento para el efecto de hover
-featureItems.forEach(item => {
-  // Aplica el efecto al entrar el cursor
-  item.addEventListener('mouseenter', () => {
-    item.style.transform = 'scale(1.2)'; // Aumenta el tamaño un 10%
-    item.style.transition = 'transform 0.3s ease'; // Transición suave
-  });
-
-  // Quita el efecto al salir el cursor
-  item.addEventListener('mouseleave', () => {
-    item.style.transform = 'scale(1)'; // Restaura el tamaño original
-  });
-});
-
-
-let mainMap, routeMap, geocoder, markerStart, markerEnd, autocompleteStart, autocompleteDestination;
-let directionsService, directionsRenderer;
-let trafficLayer; 
-
-function initMap() {
-  // Solo inicializar el mapa y capa de tráfico si el elemento "map" existe en la página actual
-  const mapElement = document.getElementById("map");
-  if (mapElement) {
-      map = new google.maps.Map(mapElement, {
-          center: { lat: -12.088577, lng: -77.005112 },
-          zoom: 13,
-      });
-      // Activar capa de tráfico
-      const trafficLayer = new google.maps.TrafficLayer();
-      trafficLayer.setMap(map);
-  }
-}
-
-initMap();
-
-function initRouteMap() {
-    const routeMapElement = document.getElementById("routeMap");
-    if (routeMapElement) {
-        // Inicializar el mapa específico para rutas en mapa_buses.html
-        routeMap = new google.maps.Map(routeMapElement, {
-            center: { lat: -12.088577, lng: -77.005112 },
-            zoom: 13,
-        });
-
+    if (options.directionsService) {
         geocoder = new google.maps.Geocoder();
         directionsService = new google.maps.DirectionsService();
         directionsRenderer = new google.maps.DirectionsRenderer();
-        directionsRenderer.setMap(routeMap);
-
-        // Inicializar autocompletado en los campos de entrada
-        const startInput = document.getElementById("start");
-        const destinationInput = document.getElementById("destination");
-
-        if (startInput && destinationInput) {
-            autocompleteStart = new google.maps.places.Autocomplete(startInput);
-            autocompleteDestination = new google.maps.places.Autocomplete(destinationInput);
-            autocompleteStart.setComponentRestrictions({ country: "pe" });
-            autocompleteDestination.setComponentRestrictions({ country: "pe" });
-        }
-
-        // Inicializar la capa de tráfico pero no mostrarla inicialmente
-        trafficLayer = new google.maps.TrafficLayer();
+        directionsRenderer.setMap(map);
     }
+
+    if (options.autocompleteInputs) {
+        const [startInput, destinationInput] = options.autocompleteInputs;
+        autocompleteStart = new google.maps.places.Autocomplete(startInput);
+        autocompleteDestination = new google.maps.places.Autocomplete(destinationInput);
+        autocompleteStart.setComponentRestrictions({ country: "pe" });
+        autocompleteDestination.setComponentRestrictions({ country: "pe" });
+    }
+
+    return map;
 }
 
-// Función para alternar el menú desplegable
+function initMap() {
+    mainMap = initializeMap("map", {
+        trafficLayer: true,
+    });
+}
+
+function initRouteMap() {
+    routeMap = initializeMap("routeMap", {
+        trafficLayer: false,
+        directionsService: true,
+        autocompleteInputs: [
+            document.getElementById("start"),
+            document.getElementById("destination"),
+        ],
+    });
+}
+
 function toggleFilterMenu() {
     const menu = document.getElementById("filterMenu");
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-// Función para mostrar/ocultar la capa de tráfico
 function toggleTrafficLayer() {
     const checkbox = document.getElementById("trafficToggle");
-    if (checkbox.checked) {
-        trafficLayer.setMap(routeMap); // Mostrar la capa de tráfico
-    } else {
-        trafficLayer.setMap(null); // Ocultar la capa de tráfico
-    }
+    trafficLayer.setMap(checkbox.checked ? routeMap : null);
 }
 
 function calculateRoute() {
@@ -120,7 +77,7 @@ function calculateRoute() {
             if (status === google.maps.DirectionsStatus.OK) {
                 directionsRenderer.setDirections(result);
                 displayRouteOptions(result.routes);
-                selectRoute(0); // Seleccionar la opción 1 por defecto
+                selectRoute(0);
             } else {
                 alert("No se pudo encontrar una ruta de transporte público: " + status);
             }
@@ -138,8 +95,6 @@ function displayRouteOptions(routes) {
         const routeInfo = document.createElement("div");
         routeInfo.classList.add("route-info");
         routeInfo.id = `routeOption${index}`;
-
-        // Agregar evento para seleccionar la ruta al hacer clic
         routeInfo.onclick = () => selectRoute(index);
 
         const duration = route.legs[0].duration.text;
@@ -176,18 +131,14 @@ function displayRouteOptions(routes) {
 }
 
 function selectRoute(index) {
-    // Establece la ruta seleccionada en el mapa
     directionsRenderer.setRouteIndex(index);
 
-    // Quitar la clase de negrita de todas las opciones
     const routeOptions = document.querySelectorAll(".route-info");
     routeOptions.forEach(option => option.classList.remove("selected"));
 
-    // Agregar la clase de negrita a la opción seleccionada
     const selectedOption = document.getElementById(`routeOption${index}`);
     selectedOption.classList.add("selected");
 }
-
 
 if (document.getElementById("routeMap")) {
     initRouteMap();

@@ -15,7 +15,7 @@ a través de la geolocalización de los buses para que puedas gestionar fácilme
 
 - Yrribarren Hercilla, Salvador
 
-Segmentos objetivo:
+## Segmentos objetivo:
 La aplicación tiene como segmentos objetivo principales a 2 grupos poblacionales:
 - Limeños
 

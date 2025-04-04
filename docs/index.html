@@ -88,8 +88,31 @@
             </div>
         </footer>
     </div>
+    <script type="module">
+    import { Loader } from "https://unpkg.com/@googlemaps/js-api-loader@1.15.2/dist/index.esm.js";
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAzybtu0c56XM31TBZ5ncYPFbTRVUW_lo&callback=initMap" async defer></script>
+    const loader = new Loader({
+      apiKey: "AIzaSyBAzybtu0c56XM31TBZ5ncYPFbTRVUW_lo", // Reemplaza con tu API key real
+      version: "weekly",
+      libraries: ["places"] // Agrega otras librerías según tus necesidades
+    });
+
+    loader.load().then(() => {
+      const mapElement = document.getElementById("map");
+      if (mapElement) {
+        const map = new google.maps.Map(mapElement, {
+          center: { lat: -12.088577, lng: -77.005112 },
+          zoom: 13,
+        });
+        // Agrega la capa de tráfico
+        const trafficLayer = new google.maps.TrafficLayer();
+        trafficLayer.setMap(map);
+      }
+    }).catch(e => {
+      console.error("Error cargando la API de Google Maps:", e);
+    });
+  </script>
+
     <script src="assets/scripts/scripts.js"></script>
 
 </body>

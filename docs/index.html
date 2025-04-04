@@ -89,7 +89,25 @@
         </footer>
     </div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIfxOTkD_7nrMyNLjdPyDniyV4anbSGTM&callback=initMap" async defer></script>
-    <script src="assets/scripts/scripts.js"></script>
+    <!-- Usamos un script de tipo módulo para cargar la API -->
+    <script type="module">
+      import { Loader } from "https://unpkg.com/@googlemaps/js-api-loader@1.15.2/dist/index.esm.js";
+    
+      const loader = new Loader({
+        apiKey: "TU_API_KEY_AQUI", // Reemplaza con tu API key
+        version: "weekly",
+        libraries: ["places"]  // Agrega las librerías que necesites
+      });
+    
+      loader.load().then(() => {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -12.0464, lng: -77.0428 },
+          zoom: 12
+        });
+      }).catch(e => {
+        console.error("Error cargando la Google Maps API:", e);
+      });
+    </script>
+
 </body>
 </html>
